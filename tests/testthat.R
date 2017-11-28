@@ -1,6 +1,6 @@
 library(testthat)
-library(FullModelSpaceTrouble)
 
-test_check("FullModelSpaceTrouble")
+
+test_check("Trendster")
 # testout <- test_dir('tests/testthat')
 # View(testout)
