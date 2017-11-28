@@ -24,7 +24,7 @@ NULL
 #' Function to execute Shiny app
 #'
 #' @export
-shinyApp <- function() { shiny::runApp(system.file('shiny', package='Trendster'), launch.browser = TRUE) }
+RunShinyApp <- function() { shiny::runApp(system.file('shiny', package='Trendster'), launch.browser = TRUE) }
 
 
 
