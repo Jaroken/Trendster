@@ -54,49 +54,41 @@ shinydashboard::dashboardPage(skin = "black",
                 shiny::tabPanel("Google 6", DT::dataTableOutput("dt6"))
               )
             ),
-
-
-
       shinydashboard::tabItem(tabName = "Forecast",
               shinydashboard::tabBox(
                                 width = 12,
-              tabPanel("Forecast",plotly::plotlyOutput("plot")),
-              tabPanel("Plot Components",shiny::plotOutput("plot2"))
-                              ),
-              shinydashboard::box(
-                title = "Inputs", status = "warning", height = 500, width = 4,
-                shiny::numericInput("timeforward", label = "Forecast Forward by:", value=30 ),
-                shiny::selectInput("growth", "Specify a linear or logistic trend", choices = c('linear','logistic')),
-                shiny::numericInput("cap", "If Logistic: Set Capacity", value=1),
-                shiny::numericInput("mcmc", "Number of MCMC samples", value=0),
-                shiny::numericInput("uncertainty", "# of simulated draws", value=1000)
-
-
+              tabPanel("Forecast", plotly::plotlyOutput("plot")),
+              tabPanel("Plot Components", shiny::plotOutput("plot2"))
               ),
               shinydashboard::box(
-                title = "", status = "warning", height = 500, width = 4,
-                shiny::numericInput("season", "Strength of the seasonality model", value=10),
-                shiny::numericInput("holiday", "Strength of Holiday's in Model (if inc)", value =10),
+                title = "Inputs", status = "warning", height = 500, width = 12,
+                column(width=4,
+                       shiny::numericInput("timeforward", label = "Forecast Forward by:", value=30 ),
+                       shiny::uiOutput('changepoints'),
+                       shiny::numericInput("chgprior","Automatic Changepoints ( More/Less Value = More/Less Changepoints", value = 0.05),
+                       shiny::numericInput("holidaynum", "Number of Holidays", value = 0),
+                       shiny::textOutput("holidaysinc"),
+                       rhandsontable::rHandsontableOutput('holidaytable')),
+                column(width=4,
+                shiny::numericInput("uncertainty", "# of simulated draws", value=1000),
                 shiny::numericInput("intervalwidth", "Width of the uncertainty intervals provided for the forecast", value = 0.8, min = 0, max = 1),
-                shiny::uiOutput('changepoints'),
-                shiny::numericInput("chgprior","Automatic Changepoints ( More/Less Value = More/Less Changepoints", value = 0.05)
-              ),
-              shinydashboard::box(
-                title = "", status = "warning", height = 500, width = 4,
-                shiny::numericInput("holidaynum", "Number of Holidays", value = 0),
-                shiny::textOutput("holidaysinc"),
-                rhandsontable::rHandsontableOutput('holidaytable')
-              )
+                shiny::numericInput("season", "Strength of the seasonality model", value=10),
+                shiny::numericInput("holiday", "Strength of Holiday's in Model (if inc)", value =10)
+                ),
+                column(width=4,
+                       shiny::selectInput("growth", "Specify a linear or logistic trend", choices = c('linear','logistic')),
+                       shiny::numericInput("cap", "If Logistic: Set Capacity", value=1),
+                       shiny::numericInput("mcmc", "Number of MCMC samples", value=0))
 
-      ),
+      )),
       shinydashboard::tabItem(tabName = "Anom",
                                 shiny::column(width = 6,
-                                shiny::numericInput("maxanom", "Max percent of cases anomalous", min=0, max=1, value = 0.03)),
+                                shiny::sliderInput("maxanom", "Max percent of cases anomalous", min=0, max=1, value = 0.03, step=0.01)),
                                 shiny::column(width = 6,
                                 shiny::numericInput("periodicity", "Periodicity", value = 12)),
                                 shinydashboard::tabBox(width=12,
                                   shiny::tabPanel("Chart",
-                                    shiny::plotOutput("anomplot")),
+                                    plotly::plotlyOutput("anomplot")),
                                   shiny::tabPanel("Table",
                                    DT::dataTableOutput("anomtab"))
                               )),

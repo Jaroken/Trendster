@@ -168,7 +168,40 @@ df$count<-as.numeric(df$count)
 AnomalyDetection::AnomalyDetectionVec(df$count, max_anoms = input$maxanom, period =input$periodicity, plot = TRUE)
 })
 
-output$anomplot <- shiny::renderPlot({anom()$plot})
+output$anomplot <- plotly::renderPlotly({
+  anom<-anom()$anoms
+  date1<-GT()$interest_over_time$date
+  hit1<-GT()$interest_over_time$hits
+  anom1<- rep(NA, length(date1))
+  anom1[anom$index] <- hit1[anom$index]
+  df<-data.frame(date1, hit1, anom1)
+  colnames(df)<- c("Date","Actuals","Anom")
+
+  line <- list(
+    type = "line",
+    line = list(color = "grey"),
+    xref = "x",
+    yref = "y"
+  )
+
+
+
+  outto <- floor(length(hit1)/input$periodicity)
+  lines<-list()
+  for(i in 1:outto){
+  line[["x0"]] <- df$Date[input$periodicity*i]
+  line[["x1"]] <- df$Date[input$periodicity*i]
+  line[["y0"]] <- min(as.numeric(hit1))
+  line[["y1"]] <- max(as.numeric(hit1))
+  lines <- c(lines, list(line))
+  }
+
+
+  plotly::plot_ly(df,x = ~Date, y = ~Actuals, name='Actuals', type = 'scatter', mode = 'lines')%>%
+    plotly::add_trace(y = ~Anom, name = 'Anomalies', mode = 'markers')%>%
+    plotly::layout(shapes=lines)
+
+  })
 
 output$anomtab <- DT::renderDataTable({
   dt<-anom()$anoms
