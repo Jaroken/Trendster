@@ -440,7 +440,7 @@ output$causeplot3<-plotly::renderPlotly({
 })
 
 
-output$causalTable<-DT::renderDataTable({data.table::data.table(t(Impact()$summary))})
+output$causalTable<-DT::renderDataTable(data.table::data.table((Impact()$summary)), options = list(scrollX = TRUE))
 
 output$causalReport<-shiny::renderText({Impact()$report})
 
