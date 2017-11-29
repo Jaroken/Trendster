@@ -1,4 +1,4 @@
-Tr### Trendster
+### Trendster
 
 A shiny dashboard to explore time series packages from Twitter, Facebook, and Google using Google Trends Data. 
 These packages perform anomaly detection, forecasting, and causal impact. To get started type in a search term and click the magnifying glass. The app will download Google Trends data into the app and then you can play around with the three different libraries.
@@ -7,6 +7,7 @@ These packages perform anomaly detection, forecasting, and causal impact. To get
 ### Installation
 
 ```{r installation, eval = FALSE}
+install.packages("devtools")
 devtools::install_github("Jaroken/Trendster")
 ```
   
