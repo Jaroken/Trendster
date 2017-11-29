@@ -127,7 +127,9 @@ output$plot<- plotly::renderPlotly({
   gg<-plotly::plot_ly(df, x = ~Date, y = ~`Lower Prediction`, name='Lower Prediction', type = 'scatter', mode = 'lines', line= list(color = 'rgb(22, 96, 167)'), showlegend = FALSE)%>%
     plotly::add_trace(y = ~`Upper Prediction`, fill='tonexty', name = 'Upper Prediction', mode = 'lines', fillcolor = 'rgba(168, 216, 234, 0.5)', showlegend = FALSE) %>%
     plotly::add_trace(y = ~Prediction, name = 'Prediction', mode = 'lines', line=list(color = 'rgb(255, 16, 67)'), showlegend = FALSE) %>%
-    plotly::add_trace(y = ~Actuals, name = 'Actuals',type = 'scatter', mode = 'markers+lines', marker = list(color = 'rgba(67,67,67,1)', size = 8), line=list(color = 'rgb(67, 67, 67)'), showlegend = FALSE)
+    plotly::add_trace(y = ~Actuals, name = 'Actuals',type = 'scatter', mode = 'markers+lines', marker = list(color = 'rgba(67,67,67,1)', size = 8), line=list(color = 'rgb(67, 67, 67)'), showlegend = FALSE)%>%
+    plotly::layout(yaxis=list(title = ""))
+
   plotly::rangeslider(gg)
 })
 
@@ -199,7 +201,8 @@ output$anomplot <- plotly::renderPlotly({
 
   plotly::plot_ly(df,x = ~Date, y = ~Actuals, name='Actuals', type = 'scatter', mode = 'lines')%>%
     plotly::add_trace(y = ~Anom, name = 'Anomalies', mode = 'markers')%>%
-    plotly::layout(shapes=lines)
+    plotly::layout(yaxis=list(title = ""), shapes=lines)
+
 
   })
 
