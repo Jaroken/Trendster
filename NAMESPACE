@@ -3,7 +3,6 @@
 export(RunShinyApp)
 import(CausalImpact)
 import(DT)
-import(gtrendsR)
 import(magrittr)
 import(plotly)
 import(prophet)

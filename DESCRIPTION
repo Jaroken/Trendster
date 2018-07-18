@@ -16,10 +16,10 @@ Imports: shiny,
     rhandsontable,
     CausalImpact,
     plotly,
-    gtrendsR,
     zoo,
     magrittr,
     DT
 Suggests: testthat,
+    gtrendsR,
     dplyr
-Remotes: twitter/AnomalyDetection
+Remotes: twitter/AnomalyDetection, PMassicotte/gtrendsR
